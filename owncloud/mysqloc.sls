@@ -7,7 +7,7 @@ mysql-requirements:
       - mysql-server
       - mysql-client
     - require_in:
-      - service: mysql
+      - service: mysqloc
       - mysql_user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
 
 mysqloc:
@@ -24,7 +24,7 @@ owncloud-local:
     - require:
       - pkg: python-mysqldb
       - pkg: mysql-requirements
-      - service: mysql
+      - service: mysqloc
 
 ownclouddb:
   mysql_database.present:
@@ -40,5 +40,5 @@ ownclouddb:
     - require:
       - mysql_database: {{ salt['pillar.get']('owncloud:owncloud_database', '') }}
       - pkg: python-mysqldb
-      - service: mysql
+      - service: mysqloc
 
