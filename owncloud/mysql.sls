@@ -39,6 +39,8 @@ owncloud-local:
 ownclouddb:
   mysql_database.present:
     - name: {{ salt['pillar.get']('owncloud:owncloud_database', '') }}
+    - connection_user: root
+    - connection_pass: '{{ salt['pillar.get']('mysql:server:root_password', '') }}'
     - require:
       - mysql_user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
       - pkg: python-mysqldb
