@@ -1,7 +1,7 @@
 {% from "owncloud/map.jinja" import owncloud with context %}
 
 include:
-  #  - owncloud.mysql # us mysql formula instead
+  - owncloud.mysql 
   - owncloud.repo
 
 apache2-stuff:
