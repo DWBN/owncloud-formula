@@ -29,6 +29,8 @@ owncloud-local:
     - name: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
     - host: localhost
     - password: {{ salt['pillar.get']('owncloud:owncloud_password', '') }}
+    - connection_user: root
+    - connection_pass: '{{ salt['pillar.get']('mysql:server:root_password', '') }}'
     - require:
       - pkg: python-mysqldb
       - pkg: mysql-requirements
@@ -45,6 +47,8 @@ ownclouddb:
     - database:  {{ salt['pillar.get']('owncloud:owncloud_database', '') }}.*
     - host: localhost
     - user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
+    - connection_user: root
+    - connection_pass: '{{ salt['pillar.get']('mysql:server:root_password', '') }}'
     - require:
       - mysql_database: {{ salt['pillar.get']('owncloud:owncloud_database', '') }}
       - pkg: python-mysqldb
