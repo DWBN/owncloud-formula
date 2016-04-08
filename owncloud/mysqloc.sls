@@ -10,8 +10,9 @@ mysql-requirements:
       - service: mysql
       - mysql_user: {{ salt['pillar.get']('owncloud:owncloud_user', '') }}
 
-mysql:
+mysqloc:
   service.running:
+    - name: mysql
     - watch:
       - pkg: mysql-requirements
 
