@@ -1,13 +1,11 @@
-{%- set mysql_root_user = salt['pillar.get']('mysql:server:root_user', 'root') %}
-{%- set mysql_root_pass = salt['pillar.get']('mysql:server:root_password', salt['grains.get']('server_id')) %}
 
 include:
   - owncloud.python-mysqldb
 
 mysql_root_password:
   cmd.run:
-    - name: mysqladmin --user root password '{{ mysql_root_password }}'
-    - unless: mysql --user root --password='{{ mysql_root_password }}' --execute="SELECT 1;"
+    - name: mysqladmin --user root password '{{ salt['pillar.get']('mysql:server:root_password', '') }}'
+    - unless: mysql --user root --password='{{ salt['pillar.get']('mysql:server:root_password', '') }}' --execute="SELECT 1;"
     - require:
       - service: mysql
 
