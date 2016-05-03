@@ -1,7 +1,7 @@
 {% from "owncloud/map.jinja" import owncloud with context %}
 
 include:
-  - owncloud.mysql 
+  - owncloud.mysql
   - owncloud.repo
 
 apache2-stuff:
@@ -21,7 +21,7 @@ install-owncloud:
   pkg.installed:
     - name: {{ owncloud.pkg }}
     - refresh: True
-    
+
 autoconfig-owncloud:
   file.managed:
     - template: jinja
@@ -29,3 +29,11 @@ autoconfig-owncloud:
     - source: salt://owncloud/autoconfig.php.jinja
     - user: www-data
     - group: www-data
+
+
+run ownclouds cron.php:
+  cron.present:
+    - user: www-data
+    - identifier: 'run ownclouds cron.php'
+    - name: '/usr/bin/php -f /var/www/owncloud/cron.php > /dev/null 2>&1'
+    - minute: '*/15'
